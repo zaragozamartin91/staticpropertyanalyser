@@ -1,0 +1,6 @@
+pluginManagement {
+    includeBuild '../staticpropertyanalyser'
+}
+
+rootProject.name = 'staticpropertyanalyser-consumer'
+

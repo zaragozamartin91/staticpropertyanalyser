@@ -1,0 +1,48 @@
+
+plugins {
+	id 'java-gradle-plugin'
+	// Publish plugin to local folder
+	id 'maven-publish'
+}
+
+publishing {
+	repositories {
+		maven {
+			url = layout.buildDirectory.dir('repo')
+		}
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+group = 'io.github.zaragozamartin91'
+version = '0.0.1-SNAPSHOT'
+
+
+dependencies {
+	/* our plugin requires Gradle API interfaces and classes to compile
+	* https://docs.gradle.org/current/dsl/org.gradle.api.artifacts.dsl.DependencyHandler.html#N17409 */
+	implementation gradleApi()
+
+	/* To use the Groovy library that ships with Gradle, declare a localGroovy() dependency
+	* https://docs.gradle.org/current/userguide/groovy_plugin.html#sec:groovy_dependency_management */
+	implementation localGroovy()
+
+	testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
+}
+
+test {
+	useJUnitPlatform()
+}
+
+gradlePlugin {
+	plugins {
+		simplePlugin {
+			id = 'io.github.zaragozamartin91.staticpropertyanalyser'
+			implementationClass = 'io.github.zaragozamartin91.staticpropertyanalyser.StaticPropertiesPlugin'
+		}
+	}
+
+}
