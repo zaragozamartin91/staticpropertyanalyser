@@ -17,7 +17,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 /* Example test
 * extracted from https://docs.gradle.org/current/userguide/test_kit.html#example_using_gradlerunner_with_java_and_junit */
-@Disabled
+//@Disabled
 public class ExampleFunctionalTest {
 
     @TempDir File testProjectDir;
@@ -33,6 +33,7 @@ public class ExampleFunctionalTest {
     @Test
     public void testHelloWorldTask() throws IOException {
         writeFile(settingsFile, "rootProject.name = 'hello-world'");
+
         String buildFileContent = "task helloWorld {" +
                 "    doLast {" +
                 "        println 'Hello world!'" +

@@ -1,6 +1,8 @@
 
 plugins {
+	id 'groovy'
 	id 'java-gradle-plugin'
+
 	// Publish plugin to local folder
 	id 'maven-publish'
 }
@@ -31,6 +33,10 @@ dependencies {
 	implementation localGroovy()
 
 	testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
+	testImplementation('org.spockframework:spock-core:2.2-groovy-3.0') {
+		exclude group: 'org.codehaus.groovy'
+	}
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 test {
@@ -44,5 +50,4 @@ gradlePlugin {
 			implementationClass = 'io.github.zaragozamartin91.staticpropertyanalyser.StaticPropertiesPlugin'
 		}
 	}
-
 }

@@ -18,4 +18,9 @@ class StaticPropertiesPluginTest {
 
 
     }
+
+    @Test
+    void testMapEntryEquals() {
+
+    }
 }
