@@ -6,6 +6,9 @@ import spock.lang.TempDir
 
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
+/**
+ * Main plugin functional test using GROOVY API
+ */
 class StaticPropertiesPluginGroovyFunctionalTest extends Specification {
     @TempDir File testProjectDir
     File buildFile

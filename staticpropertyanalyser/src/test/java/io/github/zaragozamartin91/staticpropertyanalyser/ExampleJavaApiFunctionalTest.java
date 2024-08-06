@@ -11,14 +11,12 @@ import java.io.IOException;
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.GradleRunner;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/* Example test
+/* Example FUNCTIONAL test using JAVA API
 * extracted from https://docs.gradle.org/current/userguide/test_kit.html#example_using_gradlerunner_with_java_and_junit */
-//@Disabled
-public class ExampleFunctionalTest {
+public class ExampleJavaApiFunctionalTest {
 
     @TempDir File testProjectDir;
     private File settingsFile;
@@ -51,14 +49,8 @@ public class ExampleFunctionalTest {
     }
 
     private void writeFile(File destination, String content) throws IOException {
-        BufferedWriter output = null;
-        try {
-            output = new BufferedWriter(new FileWriter(destination));
+        try (BufferedWriter output = new BufferedWriter(new FileWriter(destination))) {
             output.write(content);
-        } finally {
-            if (output != null) {
-                output.close();
-            }
         }
     }
 
