@@ -1,7 +1,7 @@
 package io.github.zaragozamartin91.staticpropertyanalyser;
 
+import io.github.zaragozamartin91.staticpropertyanalyser.task.HelloWorldTask;
 import java.io.File;
-import java.util.Map;
 import java.util.Set;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -15,16 +15,6 @@ public class StaticPropertiesPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
-        Task parseTask = project.task("parse");
-        parseTask.setGroup(PLUGIN_GROUP);
-        parseTask.doLast(task -> {
-            System.out.println("This is StaticPropertiesPlugin!");
-            System.out.println("Module name: " + project.getName());
-            System.out.println("Module directory: " + project.getProjectDir());
-            Map<String, ?> projectProperties = project.getProperties();
-            System.out.println("Project properties: " + projectProperties);
-        });
-
         Task listResourceDirsTask = project.task("listResourceDirs");
         listResourceDirsTask.setGroup(PLUGIN_GROUP);
         listResourceDirsTask.doLast(task -> {
@@ -36,5 +26,9 @@ public class StaticPropertiesPlugin implements Plugin<Project> {
                 System.out.println("srcDirs = " + srcDirs);
             });
         });
+
+        /* NOT specifying the group of a task makes it hidden: https://docs.gradle.org/current/userguide/more_about_tasks.html#sec:hidden_tasks */
+        HelloWorldTask helloWorldTask = project.getTasks().create(HelloWorldTask.TASK_NAME, HelloWorldTask.class);
+        helloWorldTask.setGroup(PLUGIN_GROUP);
     }
 }

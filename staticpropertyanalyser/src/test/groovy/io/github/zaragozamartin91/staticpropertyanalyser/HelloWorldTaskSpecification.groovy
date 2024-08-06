@@ -9,7 +9,7 @@ import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 /**
  * Main plugin functional test using GROOVY API
  */
-class StaticPropertiesPluginGroovyFunctionalTest extends Specification {
+class HelloWorldTaskSpecification extends Specification {
     @TempDir File testProjectDir
     File buildFile
     File settingsFile
@@ -21,7 +21,7 @@ class StaticPropertiesPluginGroovyFunctionalTest extends Specification {
         buildFile = new File(testProjectDir, 'build.gradle')
     }
 
-    def "parse task is available"() {
+    def "helloWorld task is available"() {
         given:
         buildFile << """
         plugins {
@@ -33,12 +33,17 @@ class StaticPropertiesPluginGroovyFunctionalTest extends Specification {
         when:
         def result = GradleRunner.create()
                                  .withProjectDir(testProjectDir)
-                                 .withArguments('parse')
+                                 .withArguments(arguments)
                                  .withPluginClasspath()
                                  .build()
 
         then:
-        result.output.contains('This is StaticPropertiesPlugin!')
-        result.task(":parse").outcome == SUCCESS
+        result.output.contains(expectedOutput)
+        result.task(":helloWorld").outcome == SUCCESS
+
+        where:
+        salute                      | arguments                             |  expectedOutput
+        'This is a custom salute'   | ['helloWorld', '--salute', salute]    |  salute
+        null                        | ['helloWorld']                        |  'Hello, this is StaticPropertiesPlugin#HelloWorldTask'
     }
 }

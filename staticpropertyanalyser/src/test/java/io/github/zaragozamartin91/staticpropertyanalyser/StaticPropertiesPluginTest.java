@@ -17,6 +17,6 @@ class StaticPropertiesPluginTest {
         SortedMap<String, Task> taskMap = project.getTasks().getAsMap();
 
         assertTrue(taskMap.containsKey("listResourceDirs"));
-        assertTrue(taskMap.containsKey("parse"));
+        assertTrue(taskMap.containsKey("helloWorld"));
     }
 }

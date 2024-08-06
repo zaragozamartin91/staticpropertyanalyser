@@ -166,7 +166,7 @@ Define extension:
 ```java
 public class GreetingPluginExtension {
     private String greeter = "Baeldung";
-    private String message = "Message from the plugin!"
+    private String message = "Message from the plugin!";
     // standard getters and setters
 }
 ```
@@ -231,3 +231,9 @@ public class StaticPropertiesPlugin implements Plugin<Project> {
     }
 }
 ```
+
+## Publishing plugins to the GRADLE PLUGIN PORTAL
+
+From [official docs](https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html).
+
+_Publishing a plugin is the primary way to make it available for others to use. While you can publish to a private repository to restrict access, publishing to the Gradle Plugin Portal makes your plugin available to anyone in the world._
