@@ -28,8 +28,7 @@ Task should be configurable via DSL.
 
 Eg:
 ```groovy
-tasks.register("orderPropertiesAlphabetically", io.github.zaragozamartin91.staticpropertyanalyser.task.OrderPropertiesAlphabeticallyTask) {
-    group = 'StaticProperties'
+orderPropertiesExtension {
     profiles = ['us', 'us-staging', 'us-production']
     gapLinesBetweenGroups = 1
 }

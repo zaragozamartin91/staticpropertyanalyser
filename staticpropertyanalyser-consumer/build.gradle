@@ -23,3 +23,7 @@ tasks.register("configurableHelloWorldTask", io.github.zaragozamartin91.staticpr
     group = 'StaticProperties'
     salute = 'hey there'
 }
+
+helloWorldExtension {
+    salute = 'Salute configured via an extension!'
+}

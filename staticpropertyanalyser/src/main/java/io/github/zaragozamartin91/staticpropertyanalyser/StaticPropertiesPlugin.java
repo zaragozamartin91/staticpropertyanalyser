@@ -1,5 +1,7 @@
 package io.github.zaragozamartin91.staticpropertyanalyser;
 
+import io.github.zaragozamartin91.staticpropertyanalyser.extension.HelloWorldExtension;
+import io.github.zaragozamartin91.staticpropertyanalyser.task.ExtensibleHelloWorldTask;
 import io.github.zaragozamartin91.staticpropertyanalyser.task.HelloWorldTask;
 import java.io.File;
 import java.util.Set;
@@ -31,5 +33,10 @@ public class StaticPropertiesPlugin implements Plugin<Project> {
         /* Creating ta task this way makes it ready to be used via gradle commands. */
         HelloWorldTask helloWorldTask = project.getTasks().create(HelloWorldTask.TASK_NAME, HelloWorldTask.class);
         helloWorldTask.setGroup(PLUGIN_GROUP);
+
+        ExtensibleHelloWorldTask extensibleHelloWorldTaskWorldTask = project.getTasks().create(ExtensibleHelloWorldTask.TASK_NAME, ExtensibleHelloWorldTask.class);
+        HelloWorldExtension helloWorldExtension = project.getExtensions().create(HelloWorldExtension.NAME, HelloWorldExtension.class);
+        extensibleHelloWorldTaskWorldTask.getExtensions().add(HelloWorldExtension.NAME, helloWorldExtension);
+        extensibleHelloWorldTaskWorldTask.setGroup(PLUGIN_GROUP);
     }
 }
