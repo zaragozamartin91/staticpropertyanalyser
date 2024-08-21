@@ -20,6 +20,7 @@ public class HelloWorldTask extends DefaultTask {
         return salute;
     }
 
+    /* The @Option annotation makes the "salute" input parameter configurable from command-line */
     @Option(option = "salute", description = "Configures a desired salute")
     public void setSalute(String salute) {
         this.salute = salute;

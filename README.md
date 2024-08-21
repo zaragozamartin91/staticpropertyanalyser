@@ -18,3 +18,19 @@ The task could be named "analyseRedundancy" and could be run as follows:
 ```
 
 The result should be a list of the parsed files and the redundant properties.
+
+
+### Order properties in alphabetical order
+
+Given a properties file, order the properties in alphabetical order.
+
+Task should be configurable via DSL.
+
+Eg:
+```groovy
+tasks.register("orderPropertiesAlphabetically", io.github.zaragozamartin91.staticpropertyanalyser.task.OrderPropertiesAlphabeticallyTask) {
+    group = 'StaticProperties'
+    profiles = ['us', 'us-staging', 'us-production']
+    gapLinesBetweenGroups = 1
+}
+```

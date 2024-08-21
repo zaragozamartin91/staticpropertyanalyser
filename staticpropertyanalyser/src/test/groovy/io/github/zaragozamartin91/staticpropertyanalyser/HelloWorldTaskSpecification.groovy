@@ -42,8 +42,39 @@ class HelloWorldTaskSpecification extends Specification {
         result.task(":helloWorld").outcome == SUCCESS
 
         where:
-        salute                      | arguments                             |  expectedOutput
-        'This is a custom salute'   | ['helloWorld', '--salute', salute]    |  salute
-        null                        | ['helloWorld']                        |  'Hello, this is StaticPropertiesPlugin#HelloWorldTask'
+        salute                    | arguments                          | expectedOutput
+        'This is a custom salute' | ['helloWorld', '--salute', salute] | salute
+        null                      | ['helloWorld']                     | 'Hello, this is StaticPropertiesPlugin#HelloWorldTask'
     }
+
+    def "ConfigurableHelloWorldTask task is configurable via gradle DSL"() {
+        given:
+        buildFile << """
+        plugins {
+            id 'java'
+            id 'io.github.zaragozamartin91.staticpropertyanalyser'
+        }
+        
+        tasks.register("${taskName}", io.github.zaragozamartin91.staticpropertyanalyser.task.ConfigurableHelloWorldTask) {
+            group = 'StaticProperties'
+            salute = 'hey there'
+        }
+        """
+
+        when:
+        def result = GradleRunner.create()
+                                 .withProjectDir(testProjectDir)
+                                 .withArguments(arguments)
+                                 .withPluginClasspath()
+                                 .build()
+
+        then:
+        result.output.contains(expectedOutput)
+        result.task(":${taskName}").outcome == SUCCESS
+
+        where:
+        taskName                 | arguments                  | expectedOutput
+        'configurableHelloWorld' | ['configurableHelloWorld'] | 'Your salute message is: hey there'
+    }
+
 }

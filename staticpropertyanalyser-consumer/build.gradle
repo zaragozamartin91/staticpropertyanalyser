@@ -18,3 +18,8 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+tasks.register("configurableHelloWorldTask", io.github.zaragozamartin91.staticpropertyanalyser.task.ConfigurableHelloWorldTask) {
+    group = 'StaticProperties'
+    salute = 'hey there'
+}

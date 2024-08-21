@@ -28,6 +28,7 @@ public class StaticPropertiesPlugin implements Plugin<Project> {
         });
 
         /* NOT specifying the group of a task makes it hidden: https://docs.gradle.org/current/userguide/more_about_tasks.html#sec:hidden_tasks */
+        /* Creating ta task this way makes it ready to be used via gradle commands. */
         HelloWorldTask helloWorldTask = project.getTasks().create(HelloWorldTask.TASK_NAME, HelloWorldTask.class);
         helloWorldTask.setGroup(PLUGIN_GROUP);
     }
