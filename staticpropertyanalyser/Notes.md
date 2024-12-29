@@ -158,6 +158,36 @@ public class BuildLogicFunctionalTest {
 }
 ```
 
+### Adding the plugin as an AD-HOC jar 
+
+To include your binary plugin in a separate Gradle project (aka "foobar") using the JAR file, you need to add the JAR file to the buildscript classpath and then apply the plugin using its ID. Here are the steps:
+
+1. Place the plugin JAR file in a directory within your project. For example, you might create a `libs` directory at the root of your project and place the JAR file there.
+
+2. In the `build.gradle` file of your "foobar" project, add the following:
+
+```groovy
+buildscript {
+    repositories {
+        flatDir {
+            dirs 'libs' // This should be the path to the directory where you placed the JAR file
+        }
+    }
+    dependencies {
+        classpath 'io.github.zaragozamartin91.staticpropertyanalyser:staticpropertyanalyser:0.0.1-SNAPSHOT'
+    }
+}
+
+apply plugin: 'io.github.zaragozamartin91.staticpropertyanalyser'
+```
+
+In the `buildscript` block, we're adding a flat directory repository that points to the `libs` directory. This tells Gradle to look in this directory when resolving dependencies for the buildscript. We then add a dependency on your plugin using its group ID, artifact ID, and version.
+
+Finally, we apply the plugin using its ID.
+
+Now, when you run a Gradle build, it should include your plugin and execute its tasks as part of the build process.
+
+
 ## Defining extensions
 
 From Baeldung: https://www.baeldung.com/gradle-create-plugin

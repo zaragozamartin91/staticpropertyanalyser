@@ -27,3 +27,13 @@ tasks.register("configurableHelloWorldTask", io.github.zaragozamartin91.staticpr
 helloWorldExtension {
     salute = 'Salute configured via an extension!'
 }
+
+tasks.register("someZip", Zip) {
+    from 'src/main/resources'
+    from tasks.jar {
+        into('lib')
+    }
+
+    archiveFileName = 'someZip.zip'
+    destinationDir = file('build')
+}

@@ -3,6 +3,7 @@ package io.github.zaragozamartin91.staticpropertyanalyser;
 import io.github.zaragozamartin91.staticpropertyanalyser.extension.HelloWorldExtension;
 import io.github.zaragozamartin91.staticpropertyanalyser.task.ExtensibleHelloWorldTask;
 import io.github.zaragozamartin91.staticpropertyanalyser.task.HelloWorldTask;
+import io.github.zaragozamartin91.staticpropertyanalyser.task.SortPropertiesTask;
 import java.io.File;
 import java.util.Set;
 import org.gradle.api.Plugin;
@@ -38,5 +39,8 @@ public class StaticPropertiesPlugin implements Plugin<Project> {
         HelloWorldExtension helloWorldExtension = project.getExtensions().create(HelloWorldExtension.NAME, HelloWorldExtension.class);
         extensibleHelloWorldTaskWorldTask.getExtensions().add(HelloWorldExtension.NAME, helloWorldExtension);
         extensibleHelloWorldTaskWorldTask.setGroup(PLUGIN_GROUP);
+
+        SortPropertiesTask sortPropertiesTask = project.getTasks().create(SortPropertiesTask.TASK_NAME, SortPropertiesTask.class);
+        sortPropertiesTask.setGroup(PLUGIN_GROUP);
     }
 }
