@@ -9,7 +9,7 @@ import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 /**
  * Main plugin functional test using GROOVY API
  */
-class HelloWorldTaskSpecification extends Specification {
+class ConfigurableHelloWorldTaskSpecification extends Specification {
     @TempDir
     File testProjectDir
     File buildFile
@@ -22,12 +22,18 @@ class HelloWorldTaskSpecification extends Specification {
         buildFile = new File(testProjectDir, 'build.gradle')
     }
 
-    def "helloWorld task is available"() {
+
+    def "ConfigurableHelloWorldTask task is configurable via gradle DSL on registration"() {
         given:
         buildFile << """
         plugins {
             id 'java'
             id 'io.github.zaragozamartin91.staticpropertyanalyser'
+        }
+        
+        tasks.register("${taskName}", io.github.zaragozamartin91.staticpropertyanalyser.task.ConfigurableHelloWorldTask) {
+            group = 'StaticProperties'
+            salute = 'hey there'
         }
         """
 
@@ -40,11 +46,10 @@ class HelloWorldTaskSpecification extends Specification {
 
         then:
         result.output.contains(expectedOutput)
-        result.task(":helloWorld").outcome == SUCCESS
+        result.task(":${taskName}").outcome == SUCCESS
 
         where:
-        salute                    | arguments                          | expectedOutput
-        'This is a custom salute' | ['helloWorld', '--salute', salute] | salute
-        null                      | ['helloWorld']                     | 'Hello, this is StaticPropertiesPlugin#HelloWorldTask'
+        taskName                 | arguments                  | expectedOutput
+        'configurableHelloWorld' | ['configurableHelloWorld'] | 'Your salute message is: hey there'
     }
 }
