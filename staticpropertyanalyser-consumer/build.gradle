@@ -1,3 +1,6 @@
+import io.github.zaragozamartin91.staticpropertyanalyser.task.ConfigurableHelloWorldTask
+import io.github.zaragozamartin91.staticpropertyanalyser.task.SortPropertiesTask
+
 plugins {
     id 'java'
     id 'io.github.zaragozamartin91.staticpropertyanalyser' version '0.0.1-SNAPSHOT'
@@ -19,7 +22,7 @@ test {
     useJUnitPlatform()
 }
 
-tasks.register("configurableHelloWorldTask", io.github.zaragozamartin91.staticpropertyanalyser.task.ConfigurableHelloWorldTask) {
+tasks.register("configurableHelloWorldTask", ConfigurableHelloWorldTask) {
     group = 'StaticProperties'
     salute = 'hey there'
 }
@@ -35,5 +38,14 @@ tasks.register("someZip", Zip) {
     }
 
     archiveFileName = 'someZip.zip'
-    destinationDir = file('build')
+}
+
+/* Testing manual config of SortPropertiesTask */
+def sortProperties = tasks.named('sortProperties', SortPropertiesTask)
+sortProperties.configure { t ->
+    resourceFile = 'application.properties'
+}
+/* Testing adding dependency of build task with SortPropertiesTask */
+tasks.named('build').configure { t ->
+    t.dependsOn(sortProperties)
 }
