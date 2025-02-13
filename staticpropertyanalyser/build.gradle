@@ -24,6 +24,12 @@ repositories {
 group = 'io.github.zaragozamartin91'
 version = '0.0.1-SNAPSHOT'
 
+/* Setting language level to java 17 */
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
 
 dependencies {
 	/* our plugin requires Gradle API interfaces and classes to compile
