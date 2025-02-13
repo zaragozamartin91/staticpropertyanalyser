@@ -22,6 +22,7 @@ public class ProjectFileSystem {
         String resourceSetName = resourceFileQuery.getResourceSetName();
         Path path = resourceFileQuery.getPath();
 
+        // Source sets queried following https://discuss.gradle.org/t/custom-plugin-how-to-find-all-defined-source-sets/39051
         var sourceSets = project.getExtensions().getByType(SourceSetContainer.class);
 
         List<File> fileMatches = sourceSets.stream()

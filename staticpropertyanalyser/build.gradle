@@ -1,4 +1,6 @@
 
+// Java plugin based on https://github.com/ekim197711/demo-standalone-gradle-plugin/tree/master/src/test/groovy/com/codeinvestigator/plugin
+
 plugins {
 	id 'groovy'
 	id 'java-gradle-plugin'

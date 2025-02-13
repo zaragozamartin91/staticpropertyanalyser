@@ -8,6 +8,7 @@ import java.io.File;
 import java.util.Set;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.tasks.SourceSetContainer;
 
@@ -17,25 +18,24 @@ public class StaticPropertiesPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
-        project.getTasks().register("listResourceDirs", listResourceDirsTask -> {
-            listResourceDirsTask.setGroup(PLUGIN_GROUP);
-            listResourceDirsTask.doLast(task -> {
-                var sourceSets = project.getExtensions().getByType(SourceSetContainer.class);
-                sourceSets.forEach(sourceSet -> {
-                    System.out.println("Source set " + sourceSet.getName());
-                    SourceDirectorySet resourcesDirSet = sourceSet.getResources();
-                    Set<File> srcDirs = resourcesDirSet.getSrcDirs();
-                    System.out.println("srcDirs = " + srcDirs);
-                });
+        Task listResourceDirsTask = project.task("listResourceDirs");
+        listResourceDirsTask.setGroup(PLUGIN_GROUP);
+        listResourceDirsTask.doLast(task -> {
+            var sourceSets = project.getExtensions().getByType(SourceSetContainer.class);
+            sourceSets.forEach(sourceSet -> {
+                System.out.println("Source set " + sourceSet.getName());
+                SourceDirectorySet resourcesDirSet = sourceSet.getResources();
+                Set<File> srcDirs = resourcesDirSet.getSrcDirs();
+                System.out.println("srcDirs = " + srcDirs);
             });
         });
 
         /* NOT specifying the group of a task makes it hidden: https://docs.gradle.org/current/userguide/more_about_tasks.html#sec:hidden_tasks */
         /* Creating ta task this way makes it ready to be used via gradle commands. */
-        project.getTasks().register(HelloWorldTask.TASK_NAME, HelloWorldTask.class, task -> {
-            task.setGroup(PLUGIN_GROUP);
-        });
+        HelloWorldTask helloWorldTask = project.getTasks().create(HelloWorldTask.TASK_NAME, HelloWorldTask.class);
+        helloWorldTask.setGroup(PLUGIN_GROUP);
 
+        /* Regarding task creation vs task registration: https://docs.gradle.org/current/userguide/task_configuration_avoidance.html */
         HelloWorldExtension helloWorldExtension = project.getExtensions().create(HelloWorldExtension.NAME, HelloWorldExtension.class);
         project.getTasks().register(ExtensibleHelloWorldTask.TASK_NAME, ExtensibleHelloWorldTask.class, task -> {
             task.getExtensions().add(HelloWorldExtension.NAME, helloWorldExtension);

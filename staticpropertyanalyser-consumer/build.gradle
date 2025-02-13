@@ -1,6 +1,8 @@
 import io.github.zaragozamartin91.staticpropertyanalyser.task.ConfigurableHelloWorldTask
 import io.github.zaragozamartin91.staticpropertyanalyser.task.SortPropertiesTask
 
+// Consumer plugin based on https://github.com/ekim197711/demo-gradle-plugin-consumer/blob/master/build.gradle
+
 plugins {
     id 'java'
     id 'io.github.zaragozamartin91.staticpropertyanalyser' version '0.0.1-SNAPSHOT'

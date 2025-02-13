@@ -16,6 +16,8 @@ class StaticPropertiesPluginTest {
         project.getPluginManager().apply( "io.github.zaragozamartin91.staticpropertyanalyser");
         SortedMap<String, Task> taskMap = project.getTasks().getAsMap();
 
+
+
         assertTrue(taskMap.containsKey("listResourceDirs"));
         assertTrue(taskMap.containsKey("helloWorld"));
     }
