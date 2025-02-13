@@ -44,8 +44,9 @@ public class ProjectFileSystem {
             throw new IllegalStateException("There are multiple sources with matching criteria: %s".formatted(fileMatches.toString()));
         }
 
-        System.out.println("Matching resource file found: " + fileMatches.getFirst());
-        return fileMatches.stream().findFirst();
+        Optional<File> match = fileMatches.stream().findFirst();
+        System.out.println("Matching resource file found: " + match.get());
+        return match;
     }
 
     public File siblingFile(File file, String suffix) {
