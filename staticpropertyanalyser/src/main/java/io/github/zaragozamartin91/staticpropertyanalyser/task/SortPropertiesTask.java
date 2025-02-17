@@ -1,6 +1,7 @@
 package io.github.zaragozamartin91.staticpropertyanalyser.task;
 
 import io.github.zaragozamartin91.staticpropertyanalyser.model.ResourceProperties;
+import io.github.zaragozamartin91.staticpropertyanalyser.model.ResourceSetType;
 import io.github.zaragozamartin91.staticpropertyanalyser.service.ProjectFileSystem;
 import io.github.zaragozamartin91.staticpropertyanalyser.service.ResourceFileQuery;
 import java.io.ByteArrayOutputStream;
@@ -8,7 +9,6 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.Instant;
-import java.util.Properties;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.TaskAction;
@@ -78,8 +78,8 @@ public class SortPropertiesTask extends DefaultTask {
         return Path.of(getResourceFile());
     }
 
-    private String resolveResourceSet() {
+    private ResourceSetType resolveResourceSet() {
         // todo : make use of extensions
-        return getResourceSet();
+        return ResourceSetType.fromString(getResourceSet());
     }
 }

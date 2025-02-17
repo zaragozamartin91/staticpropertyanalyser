@@ -1,25 +1,26 @@
 package io.github.zaragozamartin91.staticpropertyanalyser.service;
 
-import java.util.Optional;
-import java.util.function.Predicate;
+import io.github.zaragozamartin91.staticpropertyanalyser.model.ResourceSetType;
 
 public class ResourceSetDirQuery {
-    private String resourceSetName;
+    private ResourceSetType resourceSetType;
 
-    public ResourceSetDirQuery(String resourceSetName) {
-        this.resourceSetName = validResourceSetName(resourceSetName);
+    public ResourceSetDirQuery(ResourceSetType resourceSetType) {
+        this.resourceSetType = resourceSetType;
     }
 
-    private String validResourceSetName(String resourceSetName) {
-        return Optional.ofNullable(resourceSetName)
-                       .filter(Predicate.not(String::isBlank))
-                       .map(String::toLowerCase)
-                       .map(String::strip)
-                       .filter(s -> s.matches("main|test"))
-                       .orElseThrow(() -> new IllegalArgumentException("Invalid resource set name"));
+    public ResourceSetType getResourceSetType() {
+        return resourceSetType;
     }
 
-    public String getResourceSetName() {
-        return resourceSetName;
+    public boolean resourceSetMatches(String resourceSetType) {
+        return this.resourceSetType.matches(resourceSetType);
+    }
+
+    @Override
+    public String toString() {
+        return "ResourceSetDirQuery{" +
+                "resourceSetType=" + resourceSetType +
+                '}';
     }
 }

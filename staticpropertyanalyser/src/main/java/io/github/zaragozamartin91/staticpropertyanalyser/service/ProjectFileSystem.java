@@ -1,7 +1,6 @@
 package io.github.zaragozamartin91.staticpropertyanalyser.service;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -19,24 +18,21 @@ public class ProjectFileSystem {
     }
 
     public Optional<File> queryResourceFile(ResourceFileQuery resourceFileQuery) {
-        String resourceSetName = resourceFileQuery.getResourceSetName();
-        Path path = resourceFileQuery.getPath();
-
         // Source sets queried following https://discuss.gradle.org/t/custom-plugin-how-to-find-all-defined-source-sets/39051
-        var sourceSets = project.getExtensions().getByType(SourceSetContainer.class);
+        SourceSetContainer sourceSets = project.getExtensions().getByType(SourceSetContainer.class);
 
         List<File> fileMatches = sourceSets.stream()
-                                           .filter(sourceSet -> resourceSetName.equalsIgnoreCase(sourceSet.getName()))
+                                           .filter(sourceSet -> resourceFileQuery.resourceSetMatches(sourceSet.getName()))
                                            .map(SourceSet::getResources)
                                            .map(SourceDirectorySet::getSrcDirs)
                                            .flatMap(Collection::stream)
                                            .flatMap(resourceDirectory -> Optional.ofNullable(resourceDirectory.listFiles()).stream())
                                            .flatMap(Arrays::stream)
-                                           .filter(f -> f.toPath().endsWith(path))
+                                           .filter(f -> resourceFileQuery.pathMatches(f.toPath()))
                                            .toList();
 
         if (fileMatches.isEmpty()) {
-            System.err.printf("Resource for path %s not found%n", path);
+            System.err.printf("Resource for path %s not found%n", resourceFileQuery);
             return Optional.empty();
         }
 
