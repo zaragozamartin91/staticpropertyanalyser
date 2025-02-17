@@ -7,6 +7,10 @@ plugins {
 
 	// Publish plugin to local folder
 	id 'maven-publish'
+
+	// Gradle publish plugin required to publish to the gradle portal
+	// https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html#plugin-publishing-plugin
+	id 'com.gradle.plugin-publish' version '1.2.1'
 }
 
 publishing {
@@ -22,7 +26,7 @@ repositories {
 }
 
 group = 'io.github.zaragozamartin91'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 
 /* Setting language level to java 17 */
 java {
@@ -52,9 +56,15 @@ test {
 }
 
 gradlePlugin {
+	website = 'https://github.com/zaragozamartin91/staticpropertyanalyser'
+	vcsUrl = 'https://github.com/zaragozamartin91/staticpropertyanalyser'
+
 	plugins {
-		simplePlugin {
+		analyserPlugin {
 			id = 'io.github.zaragozamartin91.staticpropertyanalyser'
+			displayName = 'static-property-analyser'
+			description = 'Analyser of static property files'
+			tags.set(['property', 'analysis', 'properties', 'yaml', 'spring'])
 			implementationClass = 'io.github.zaragozamartin91.staticpropertyanalyser.StaticPropertiesPlugin'
 		}
 	}
